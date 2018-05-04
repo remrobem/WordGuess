@@ -17,9 +17,9 @@ let Letter = function (letter) {
         }
     };
 
-    // this.setTrue = function () {
-    //     this.guessed = true;
-    // };
+    this.setTrue = function () {
+        this.guessed = true;
+    };
 };
 
 

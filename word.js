@@ -21,11 +21,11 @@ let Word = function (word) {
         return letterFound;
     };
 
-    // this.setTrue = function () {
-    //     this.wordLetters.forEach(letter => {
-    //         letter.setTrue();
-    //     });
-    // };
+    this.setTrue = function () {
+        this.wordLetters.forEach(letter => {
+            letter.setTrue();
+        });
+    };
 };
 
 module.exports = Word;

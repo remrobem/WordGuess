@@ -1,9 +1,3 @@
-// **index.js**: The file containing the logic for the course of the game, which depends on `Word.js` and:
-
-//   * Randomly selects a word and uses the `Word` constructor to store it
-
-//   * Prompts the user for each guess and keeps track of the user's remaining guesses
-
 
 let Word = require('./word.js');
 let inquirer = require('inquirer');
@@ -36,64 +30,61 @@ let letterFound = false;
 let wrongGuessesAllowed = 10;
 let wrongGuesses = 0;
 let openLetters = 0;
-let prevOpenLetters = 0;
-// let guessWord = '';
+let guessWord = '';
 
-let guessWord = new Word(wordList[randomNumber()]);
-let display = guessWord.display();
-console.log(display);
-wrongGuesses = 0;
-game();
+
+let newGame = newGameSetup()
+game(newGame);
 
 
 function newGameSetup() {
-    let guessWord = new Word(wordList[randomNumber()]);
-    let display = guessWord.display();
+
+    // get a new word and display it using _ for the letters
+    let newWord = new Word(wordList[randomNumber()]);
+    let display = newWord.display();
     console.log(display);
     wrongGuesses = 0;
+    return (newWord);
 }
 
-function game() {
+function game(guessWord) {
 
-
+    //prompt user for input letter
     inquirer.prompt(prompt).then(answers => {
-        let letterFound = guessWord.userGuess(answers.userGuess);
 
-        let display = guessWord.display();
-        console.log(display);
+        // check to see if letter was found in the word
+        letterFound = guessWord.userGuess(answers.userGuess);
+        // display the guess diplay line with guessed letters display
+        display = guessWord.display();
+        console.log('\n' + display + '\n');
 
+        // check to see if all the letters have been guessed
         openLetters = (display.match(/_/gi) || []).length;
 
         if (openLetters === 0) {
-            console.log('You guessed it! On to the next word!');
-            guessWord = new Word(wordList[randomNumber()]);
-            display = guessWord.display();
-            console.log(display);
-            wrongGuesses = 0;
+            console.log('\nYou guessed it! On to the next word!\n');
+            guessWord = newGameSetup()
+
         } else {
+            // let player know if letter guessed was corrent or not. 
+            // If too many wrong, guesses, diplay the word ans start over with new word
             if (letterFound) {
-                console.log('CORRECT!');
+                console.log('\nCORRECT!\n');
             } else {
-                console.log('INCORRECT!');
+                console.log('\nINCORRECT!');
                 wrongGuesses += 1;
                 if (wrongGuesses >= wrongGuessesAllowed) {
-                    console.log('Sorry. Too many wrong guesses. Starting over with a new word');
-                    guessWord = new Word(wordList[randomNumber()]);
+                    guessWord.setTrue();
+                    console.log('\nSorry. Too many wrong guesses. Here is the word you could not guess. Starting over with a new word');
                     display = guessWord.display();
-                    console.log(display);
-                    wrongGuesses = 0;
-                    // guessWord.setTrue();
-                    // display = guessWord.display();
-                    // console.log('Sorry. Too many wrong guesses for:');
-                    // console.log(display);
-                    // console.log('Starting over with a new word');
+                    console.log('\n' + display + '\n');
+                    guessWord = newGameSetup()
                 } else {
-                    console.log((wrongGuessesAllowed - wrongGuesses) + ' guesses remaining')
+                    console.log('\n' + (wrongGuessesAllowed - wrongGuesses) + ' guesses remaining\n')
                 }
             };
         };
-
-        game();
+        game(guessWord);
     });
 };
 
