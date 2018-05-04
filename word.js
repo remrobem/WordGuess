@@ -1,25 +1,31 @@
-
-
 let Letter = require('./letter.js');
 
 
 let Word = function (word) {
-   
+
     this.wordLetters = Array.from(word).map(letter => new Letter(letter));
 
-    this.display = function() {
+    this.display = function () {
         let displayWord = '';
-        this.wordLetters.forEach((letter) => {
+        this.wordLetters.forEach(letter => {
             displayWord += letter.toString();
         });
-        console.log(displayWord);
+        return displayWord;
     };
 
-    this.userGuess = function(guessLetter) {        
-        this.wordLetters.forEach((letter) => {
+    this.userGuess = function (guessLetter) {
+        letterFound = false;
+        this.wordLetters.forEach(letter => {
             letter.guess(guessLetter);
         });
+        return letterFound;
     };
+
+    // this.setTrue = function () {
+    //     this.wordLetters.forEach(letter => {
+    //         letter.setTrue();
+    //     });
+    // };
 };
 
 module.exports = Word;
