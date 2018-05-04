@@ -1,4 +1,3 @@
-
 let Word = require('./word.js');
 let inquirer = require('inquirer');
 
@@ -51,9 +50,13 @@ function game(guessWord) {
 
     //prompt user for input letter
     inquirer.prompt(prompt).then(answers => {
+        
+        if (answers.userGuess.toLowerCase() === 'quit') {
+            return;
+        };
 
         // check to see if letter was found in the word
-        letterFound = guessWord.userGuess(answers.userGuess);
+        letterFound = guessWord.userGuess(answers.userGuess.toLowerCase());
         // display the guess diplay line with guessed letters display
         display = guessWord.display();
         console.log('\n' + display + '\n');

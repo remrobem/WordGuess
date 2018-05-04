@@ -2,7 +2,7 @@
 
 ## Objective
 
-## Guess the name of a randomly selected flower
+#### Guess the name of a randomly selected flower
 
 ## Play
 
@@ -14,3 +14,4 @@
 #### The game will let you know if your letter was in the word
 #### If the letter is in the word, the appropriate _ will be replaced by the letter
 #### You are allowed 10 incorrect guesses before the game moves on to another word
+#### You can enter 'quit' at any time to stop the game
