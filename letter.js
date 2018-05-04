@@ -6,16 +6,22 @@ let Letter = function (letter) {
         if (this.guessed === true) {
             return (' ' + this.letter);
         } else {
-            return(' ' + '_');
+            return (' ' + '_');
         }
     };
 
     this.guess = function (char) {
         if (char === this.letter) {
             this.guessed = true;
-        };
+            letterFound = true;
+        }
+    };
+
+    this.setTrue = function () {
+        this.guessed = true;
     };
 };
+
 
 module.exports = Letter;
 
